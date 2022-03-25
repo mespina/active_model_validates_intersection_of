@@ -10,14 +10,12 @@ module ActiveModelValidatesIntersectionOf
     end
 
     def validate_each(record, attribute, value)
-      raise ArgumentError, "value must be an array" unless value.is_a?(Array)
-      
-      if (value - members(record)).any?
+      if (Array(value) - members(record)).any?
         record.errors.add(attribute, :inclusion, options.except(:in, :within).merge!(value: value))
       end
     end
 
-    private 
+    private
 
     def members(record)
       members = if delimiter.respond_to?(:call)

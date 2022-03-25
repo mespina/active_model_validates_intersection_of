@@ -137,12 +137,10 @@ RSpec.describe IntersectionValidator do
         validates_intersection_of :list, in: proc { ['test'] }, message: "not valid"
       end
 
-      it "causes an exception" do
+      it "cast to array" do
         list = SomeInvalidList.new
         list.list = "d"
-        expect {
-          list.valid?
-        }.to raise_error(ArgumentError, "value must be an array")
+        expect(list.valid?).to eq false
       end
     end
   end
